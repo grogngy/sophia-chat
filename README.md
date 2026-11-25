@@ -1,25 +1,48 @@
 # Sophia — Bilingual Gen-AI Business Mentor
 
-> **Portfolio Case Study** · Full-stack production AI web application architected and developed for **IdentIA Lab** (Colombia) to help Latin American entrepreneurs discover practical Generative AI and automation opportunities.
+> **Portfolio Case Study** · Full-stack production AI web application engineered for **IdentIA Lab** (Colombia) to help Latin American entrepreneurs discover practical Generative AI and automation opportunities.
+
+---
+
+## Live Demo & Interface Preview
+
+- **Status:** Production MVP engineered for IdentIA Lab; personal portfolio demo deployment coming soon.
+- **Want to inspect or run the live chat on your machine?** Follow the [5-Minute Local Quick Start](#local-quick-start-for-reviewers) below — database migrations and model seeding are fully scripted.
 
 ---
 
 ## Overview
 
-**Sophia** is a bilingual (Spanish-first, English-aware) conversational AI mentor designed for micro-businesses and startups across Latin America. Built with Next.js App Router, Supabase, Drizzle ORM, and OpenRouter's multi-model gateway, Sophia pairs a tailored consultative system prompt with multimodal image analysis, daily rate-limiting, conversation persistence, and an admin model-management panel.
+**Sophia** is a bilingual (Spanish-first, English-aware) conversational AI mentor built for small businesses and startups across Latin America. Built with Next.js App Router, Supabase, Drizzle ORM, and OpenRouter's multi-model gateway, Sophia pairs a tailored consultative prompt architecture with multimodal logo analysis, daily rate-limiting, conversation persistence, and an admin model-management panel.
 
 ### Key Capabilities
 
-- **Bilingual Consultative Persona (`ES / EN`)**: Automatically detects English input, offers seamless language continuity, and adapts guidance for non-technical small-business owners.
+- **Bilingual Consultative Persona (`ES / EN`)**: Detects English input automatically, asks the user to confirm their preferred language for continuity, and explains AI opportunities in plain, business-friendly language.
 - **Multimodal Logo & Brand Feedback**: Supports image uploads through the Vercel AI SDK v5 multimodal pipeline for real-time logo and branding reviews.
-- **Time-Based ROI & Automation Coaching**: Guides business owners through structured time-savings estimates and workflow automation ideas without making unverified financial promises.
+- **Time-Based ROI & Automation Coaching**: Guides business owners through structured time-savings estimates (hours/week and hours/year saved) without making unverified financial claims.
 - **Progressive Lead Qualification**: Tracks conversation depth and naturally invites high-intent prospects to connect with the consulting team.
-- **Multi-Model Gateway & Admin Controls**: Powered by OpenRouter (`OpenAI`, `Google`, `Anthropic`, `xAI`), with a role-protected Admin Dashboard to activate, deactivate, or switch models in PostgreSQL.
-- **Usage Guardrails & Persistence**: Enforces a 50-message/day limit (resetting at midnight Colombia time), stores full conversation history in PostgreSQL via Drizzle ORM, and includes production maintenance/export tooling.
+- **Multi-Model Gateway & Admin Controls**: Routes across `OpenAI`, `Google`, `Anthropic`, and `xAI` via OpenRouter, with a role-protected Admin Dashboard (`/admin/models`) to enable or disable models dynamically in PostgreSQL.
+- **Usage Guardrails & Persistence**: Enforces a 50-message/day limit (resetting at midnight Colombia time), persists conversations in PostgreSQL via Drizzle ORM, and includes CLI tooling for database maintenance and conversation analytics export.
 
 ---
 
-## Tech Stack
+## System Architecture
+
+```mermaid
+flowchart LR
+    U[User Browser<br/>Landing · Auth · Chat · History] --> MW[Next.js Middleware<br/>Supabase SSR Session Guard]
+    MW --> UI[Next.js 15 App Router<br/>React 19 · Tailwind · shadcn/ui]
+    UI --> API[/api/chat Route Handler<br/>Zod Env · Multimodal Parser]
+    API --> LIM[Daily Usage Counter<br/>50 msg/day Guardrail]
+    API --> PROMPT[Sophia System Prompt<br/>Bilingual · ROI · Lead Qual]
+    PROMPT --> OR[OpenRouter AI Gateway<br/>Vercel AI SDK v5]
+    OR --> LLM[Gemini · GPT · Claude · xAI]
+    UI --> AUTH[Supabase Auth & Storage]
+    API --> DB[(Supabase PostgreSQL<br/>via Drizzle ORM)]
+    ADMIN[Admin Dashboard<br/>Model Toggles] --> DB
+```
+
+### Tech Stack
 
 | Layer | Technologies |
 | :--- | :--- |
@@ -27,48 +50,37 @@
 | **AI & Streaming** | Vercel AI SDK (`ai` v5), `@ai-sdk/react`, `@openrouter/ai-sdk-provider` |
 | **Backend & Auth** | Supabase Auth (`@supabase/ssr`), PostgreSQL, Supabase Storage |
 | **Data & Validation** | Drizzle ORM, `drizzle-kit`, Zod, `@t3-oss/env-nextjs` |
-| **Operations** | Custom TypeScript CLI scripts for migrations, user-record reconciliation, storage setup, and conversation analytics export |
-
----
-
-## Architecture Highlights
-
-```text
-Next.js App Router (Landing / Auth / Chat / History / Admin)
-        │
-        ├── Supabase Auth + Middleware (Session & Role Guard)
-        ├── Drizzle ORM ──► PostgreSQL (users, conversations, messages, ai_models)
-        └── /api/chat Route Handler
-                ├── Daily Usage Counter (50 msg/day cap)
-                ├── Sophia System Prompt & Bilingual Guardrails
-                └── OpenRouter Provider ──► Gemini / GPT / Claude / xAI
-```
+| **Operations** | TypeScript CLI scripts for migrations, auth-to-public user reconciliation, storage setup, and conversation export |
 
 ### Notable Engineering Files
 
-- `app/api/chat/route.ts` — Streaming chat handler, multimodal part extraction, daily quota check, and Sophia's bilingual consultative prompt architecture.
-- `lib/drizzle/schema/` — Normalized relational schema for users, conversations, messages, and dynamically managed AI models.
-- `lib/env.ts` — Strictly typed server/client environment validation via `@t3-oss/env-nextjs` and Zod.
-- `scripts/` & `production-fix.sql` — Production operations scripts for Drizzle migrations, auth-to-public user sync, storage provisioning, and conversation retrieval.
+- [`app/api/chat/route.ts`](app/api/chat/route.ts) — Streaming chat handler, multimodal part extraction, daily quota enforcement, and Sophia's bilingual consultative prompt architecture.
+- [`lib/drizzle/schema/`](lib/drizzle/schema/) — Relational PostgreSQL schema for `users`, `conversations`, `messages`, and dynamically managed `ai_models`.
+- [`lib/env.ts`](lib/env.ts) — Strictly typed server/client environment validation via `@t3-oss/env-nextjs` and Zod.
+- [`scripts/`](scripts/) & [`production-fix.sql`](production-fix.sql) — Production ops tooling for Drizzle migrations, auth/user sync recovery, storage provisioning, and conversation retrieval.
 
 ---
 
-## Local Setup
+## Local Quick Start (For Reviewers)
+
+Anyone can run Sophia locally on their computer in ~5 minutes using free-tier Supabase and OpenRouter accounts.
 
 ### 1. Prerequisites
 
 - Node.js 20+
-- A [Supabase](https://supabase.com) project (PostgreSQL + Auth + Storage)
+- A free [Supabase](https://supabase.com) project (PostgreSQL + Auth + Storage)
 - An [OpenRouter](https://openrouter.ai) API key
 
-### 2. Install & Configure Environment
+### 2. Clone, Install & Configure
 
 ```bash
+git clone https://github.com/grogngy/sophia-chat.git
+cd sophia-chat
 npm install
 cp .env.local.example .env.local
 ```
 
-Populate `.env.local` with your own credentials (never commit `.env.local`):
+Fill in `.env.local` (git-ignored — never commit secrets):
 
 | Variable | Scope | Description |
 | :--- | :--- | :--- |
@@ -78,23 +90,24 @@ Populate `.env.local` with your own credentials (never commit `.env.local`):
 | `SUPABASE_SERVICE_ROLE_KEY` | Server | Supabase service role key (server-only) |
 | `OPENROUTER_API_KEY` | Server | OpenRouter API key for multi-model inference |
 | `NEXT_PUBLIC_APP_URL` | Client | App base URL (e.g., `http://localhost:3000`) |
-| `NEXT_PUBLIC_COMPANY_WEBSITE` | Client | Organization website URL |
+| `NEXT_PUBLIC_COMPANY_WEBSITE` | Client | Organization or portfolio website URL |
 | `NEXT_PUBLIC_COMPANY_WHATSAPP` | Client | Contact WhatsApp number (international format) |
 | `NEXT_PUBLIC_COMPANY_EMAIL` | Client | Contact email address |
 
-### 3. Run Database Migrations & Start Dev Server
+### 3. Initialize Database & Run
 
 ```bash
 npm run db:migrate
 npm run db:seed
+npm run storage:setup
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000) to explore the landing page, sign-up/login flow, and live Sophia chat interface.
 
 ---
 
 ## Security & Attribution
 
-- All secrets are isolated in git-ignored `.env.local` files and validated at runtime through `lib/env.ts`; Supabase keys remain server-only (no `NEXT_PUBLIC_` exposure).
-- Originally engineered as a production MVP for **IdentIA Lab** (Colombia) on top of the ShipKit `chat-simple` Next.js/Supabase foundation. Company-specific credentials, private brand assets, and live contact endpoints are excluded from this portfolio repository.
+- **Strict secret isolation:** All credentials live in git-ignored `.env.local` files and are validated at startup in `lib/env.ts`; Supabase keys remain server-only (no `NEXT_PUBLIC_` browser exposure).
+- **Attribution:** Originally architected and built as a production MVP for **IdentIA Lab** (Colombia) on top of the ShipKit `chat-simple` Next.js/Supabase foundation. Company credentials, private brand files, and live production data are excluded from this personal portfolio repository.
