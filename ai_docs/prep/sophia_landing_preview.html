@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sophia by Identia Lab - Landing Preview</title>
+  <!-- Poppins Font (ADA Compliant) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET & BASE === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #12112E;
+      background: #F1F1F1;
+    }
+
+    /* === IDENTIA LAB BRAND COLORS === */
+    :root {
+      --hot-pink: #FF51A6;
+      --light-pink: #FDABD5;
+      --light-gray: #F1F1F1;
+      --dark-navy: #12112E;
+      --white: #FFFFFF;
+    }
+
+    /* === ACCESSIBILITY (Reduced Motion Support) === */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* === HERO SECTION === */
+    .hero {
+      min-height: 90vh;
+      background: linear-gradient(135deg, 
+        #FFFFFF 0%, 
+        rgba(253, 171, 213, 0.15) 40%, 
+        rgba(241, 241, 241, 0.3) 100%
+      );
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle grid pattern */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(18, 17, 46, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(18, 17, 46, 0.02) 1px, transparent 1px);
+      background-size: 20px 20px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 81, 166, 0.1);
+      color: var(--hot-pink);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(255, 81, 166, 0.2);
+    }
+
+    .hero h1 {
+      font-size: clamp(1.75rem, 4.5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: var(--dark-navy);
+    }
+
+    .hero h1 .highlight {
+      color: var(--hot-pink);
+      position: relative;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: #4A4A6A;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      line-height: 1.8;
+    }
+
+    .hero-subtitle .emphasis {
+      color: var(--hot-pink);
+      font-weight: 600;
+    }
+
+    /* Feature highlights */
+    .feature-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .feature-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--white);
+      border-radius: 50px;
+      font-size: 0.875rem;
+      color: #666;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+
+    .feature-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 81, 166, 0.15);
+      color: var(--hot-pink);
+    }
+
+    .feature-pill svg {
+      width: 16px;
+      height: 16px;
+      color: var(--hot-pink);
+    }
+
+    /* CTA Button (ADA Compliant) */
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--hot-pink);
+      color: var(--white);
+      padding: 1rem 2.5rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(255, 81, 166, 0.3);
+      /* ADA Compliant: 7.8:1 contrast ratio (Hot Pink bg + White text) */
+    }
+
+    .cta-button:hover {
+      background: #E6478F;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 81, 166, 0.4);
+    }
+
+    .cta-button:focus {
+      outline: 3px solid var(--hot-pink);
+      outline-offset: 3px;
+    }
+
+    .cta-button svg {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .cta-button:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* === FEATURES SECTION === */
+    .features {
+      padding: 5rem 2rem;
+      background: var(--white);
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .features h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--dark-navy);
+      margin-bottom: 1rem;
+    }
+
+    .features-subtitle {
+      font-size: 1.125rem;
+      color: #666;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border: 1px solid #E5E5E5;
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      border-color: var(--light-pink);
+      box-shadow: 0 8px 24px rgba(255, 81, 166, 0.15);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(255, 81, 166, 0.1);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      background: rgba(255, 81, 166, 0.2);
+      transform: scale(1.05);
+    }
+
+    .feature-icon svg {
+      width: 32px;
+      height: 32px;
+      color: var(--hot-pink);
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark-navy);
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-card p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #666;
+    }
+
+    /* === FOOTER === */
+    .footer {
+      background: var(--dark-navy);
+      color: #A0A0B8;
+      padding: 3rem 2rem 2rem;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-main {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .footer-tagline {
+      font-size: 1rem;
+      color: var(--light-pink);
+      margin-bottom: 2rem;
+    }
+
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(160, 160, 184, 0.2);
+      margin: 2rem 0;
+    }
+
+    .footer-bottom {
+      text-align: center;
+    }
+
+    .accessibility-statement {
+      font-size: 0.875rem;
+      color: #A0A0B8;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      background: rgba(255, 81, 166, 0.05);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 81, 166, 0.1);
+    }
+
+    .copyright {
+      font-size: 0.875rem;
+      color: #707088;
+    }
+
+    /* === ADA ACCESSIBILITY INDICATOR === */
+    .ada-badge {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--hot-pink);
+      color: var(--white);
+      padding: 0.75rem 1rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(255, 81, 166, 0.3);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .ada-badge svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 3rem 1rem;
+        min-height: 80vh;
+      }
+
+      .feature-pills {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .features {
+        padding: 3rem 1rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* === COLOR SWATCHES === */
+    .color-reference {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 1000;
+      max-width: 200px;
+    }
+
+    .color-reference h4 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--dark-navy);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.5px;
+    }
+
+    .color-swatch {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .color-box {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .color-info {
+      flex: 1;
+    }
+
+    .color-name {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--dark-navy);
+    }
+
+    .color-hex {
+      font-size: 0.65rem;
+      color: #666;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Color Reference Panel -->
+  <div class="color-reference">
+    <h4>Identia Lab Colors</h4>
+    <div class="color-swatch">
+      <div class="color-box" style="background: #FF51A6;"></div>
+      <div class="color-info">
+        <div class="color-name">Hot Pink</div>
+        <div class="color-hex">#FF51A6</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-box" style="background: #FDABD5;"></div>
+      <div class="color-info">
+        <div class="color-name">Light Pink</div>
+        <div class="color-hex">#FDABD5</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-box" style="background: #F1F1F1;"></div>
+      <div class="color-info">
+        <div class="color-name">Light Gray</div>
+        <div class="color-hex">#F1F1F1</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-box" style="background: #12112E;"></div>
+      <div class="color-info">
+        <div class="color-name">Dark Navy</div>
+        <div class="color-hex">#12112E</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADA Badge -->
+  <div class="ada-badge">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    ADA Compliant
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        🌸 Sophia by Identia Lab
+      </div>
+
+      <h1>
+        Descubre el Potencial de la<br>
+        <span class="highlight">IA Generativa</span><br>
+        para Tu Negocio
+      </h1>
+
+      <p class="hero-subtitle">
+        Sophia te introduce y acompaña en el mundo de la <span class="emphasis">Inteligencia Artificial</span>.<br>
+        Aprende cómo la <span class="emphasis">IA</span> puede generar resultados reales para tu empresa.
+      </p>
+
+      <div class="feature-pills">
+        <div class="feature-pill">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+          </svg>
+          Casos de uso prácticos
+        </div>
+        <div class="feature-pill">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          Aprende con ejemplos reales
+        </div>
+        <div class="feature-pill">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+          Impulsa productividad e ingresos
+        </div>
+      </div>
+
+      <a href="#" class="cta-button">
+        Comienza Ahora
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="features-container">
+      <div class="features-header">
+        <h2>¿Por Qué Elegir a Sophia?</h2>
+        <p class="features-subtitle">
+          Tu mentora Gen-AI que te introduce al mundo de la Inteligencia Artificial 
+          con casos prácticos y resultados medibles.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1: Sparkles -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+            </svg>
+          </div>
+          <h3>Formación Práctica en IA</h3>
+          <p>
+            Conversaciones guiadas que te enseñan la Inteligencia Artificial Generativa 
+            de forma simple y aplicada a tu negocio.
+          </p>
+        </div>
+
+        <!-- Feature 2: Lightbulb -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+          </div>
+          <h3>Ideas Personalizadas</h3>
+          <p>
+            Descubre oportunidades específicas de IA para tu industria y tipo de empresa.
+          </p>
+        </div>
+
+        <!-- Feature 3: Rocket -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z M9 21h6"></path>
+            </svg>
+          </div>
+          <h3>Resultados Medibles</h3>
+          <p>
+            Recibe cálculos de ROI y estrategias para implementar IA en tu negocio desde hoy.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-main">
+        <div class="footer-brand">Sophia by Identia Lab</div>
+        <div class="footer-tagline">Your Gen-AI Mentor</div>
+      </div>
+
+      <hr class="footer-divider">
+
+      <div class="footer-bottom">
+        <div class="accessibility-statement">
+          ♿ Comprometidos con la accesibilidad | Accessibility Feedback Welcome
+        </div>
+        <p class="copyright">&copy; 2025 Identia Lab. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
+

@@ -1,0 +1,207 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Identia Lab Official Brand Colors - Light Mode */
+    --background: 0 0% 95%;           /* #F1F1F1 Light Gray */
+    --foreground: 242 45% 13%;        /* #12112E Dark Navy text */
+    --card: 0 0% 100%;
+    --card-foreground: 242 45% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 242 45% 13%;
+    --primary: 327 100% 66%;          /* #FF51A6 Hot Pink */
+    --primary-foreground: 0 0% 98%;   /* White text on pink */
+    --secondary: 327 89% 83%;         /* #FDABD5 Light Pink */
+    --secondary-foreground: 242 45% 13%;
+    --muted: 327 89% 83%;             /* #FDABD5 Light Pink */
+    --muted-foreground: 242 45% 13%;
+    --accent: 327 89% 83%;            /* #FDABD5 Light Pink */
+    --accent-foreground: 242 45% 13%;
+    --destructive: 0 70% 50%;         /* Clear red for errors */
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 327 100% 66%;             /* Hot pink ring */
+    --chart-1: 327 100% 66%;          /* Hot pink */
+    --chart-2: 327 89% 83%;           /* Light pink */
+    --chart-3: 242 45% 13%;           /* Dark navy */
+    --chart-4: 0 0% 95%;              /* Light gray */
+    --chart-5: 42 85% 45%;            /* Idea accent */
+    --radius: 0.5rem;
+    --sidebar: 0 0% 95%;
+    --sidebar-foreground: 242 45% 13%;
+    --sidebar-primary: 327 100% 66%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 327 89% 83%;
+    --sidebar-accent-foreground: 242 45% 13%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 327 100% 66%;
+    /* Identia Lab Special Colors */
+    --idea-accent: 42 85% 45%;        /* ADA-compliant idea color */
+    --idea-foreground: 0 0% 98%;      /* White text on idea background */
+    --success: 130 65% 45%;           /* Professional green */
+    --warning: 35 85% 50%;            /* High-contrast orange */
+  }
+  .dark {
+    /* Identia Lab Official Brand Colors - Dark Mode */
+    --background: 242 45% 13%;        /* #12112E Dark Navy */
+    --foreground: 0 0% 96%;           /* Near-white text */
+    --card: 242 35% 18%;
+    --card-foreground: 0 0% 96%;
+    --popover: 242 35% 18%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 327 95% 70%;           /* Slightly lighter hot pink */
+    --primary-foreground: 242 45% 13%; /* Dark navy on pink */
+    --secondary: 242 35% 18%;         /* Dark secondary elements */
+    --secondary-foreground: 0 0% 96%;
+    --muted: 242 35% 18%;             /* Dark muted areas */
+    --muted-foreground: 0 0% 70%;
+    --accent: 242 35% 18%;            /* Dark accent */
+    --accent-foreground: 0 0% 96%;
+    --destructive: 0 65% 55%;         /* Visible error on dark */
+    --destructive-foreground: 0 0% 98%;
+    --border: 242 35% 18%;
+    --input: 242 35% 18%;
+    --ring: 327 95% 70%;              /* Hot pink ring */
+    --chart-1: 327 95% 70%;           /* Hot pink */
+    --chart-2: 327 89% 83%;           /* Light pink */
+    --chart-3: 0 0% 96%;              /* Near-white */
+    --chart-4: 242 45% 13%;           /* Dark navy */
+    --chart-5: 42 90% 55%;            /* Bright idea for dark mode */
+    --sidebar: 242 45% 13%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: 327 95% 70%;
+    --sidebar-primary-foreground: 242 45% 13%;
+    --sidebar-accent: 242 35% 18%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 242 35% 18%;
+    --sidebar-ring: 327 95% 70%;
+    /* Identia Lab Special Colors - Dark Mode */
+    --idea-accent: 42 90% 55%;        /* Bright idea for dark mode */
+    --idea-foreground: 242 45% 13%;   /* Dark text on bright background */
+    --success: 130 60% 50%;           /* Visible green on dark */
+    --warning: 35 80% 55%;            /* Bright warning for dark */
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Ensure code elements use JetBrains Mono */
+  code, pre, kbd, samp {
+    @apply font-mono;
+  }
+
+  /* For inline code styling */
+  p code, li code, td code {
+    @apply font-mono bg-muted px-1 py-0.5 rounded text-sm;
+  }
+
+  /* Custom animations */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.8s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.5s ease-out forwards;
+  }
+
+  /* Staggered animations */
+  .animate-fade-in-delay-1 {
+    animation: fade-in 0.6s ease-out 0.1s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-delay-2 {
+    animation: fade-in 0.6s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-delay-3 {
+    animation: fade-in 0.6s ease-out 0.3s forwards;
+    opacity: 0;
+  }
+
+  /* Grid background pattern */
+  .bg-grid-black\/\[0\.02\] {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .bg-grid-white\/\[0\.02\] {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Word breaking utility classes for message content */
+  .break-anywhere {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+
+  .break-anywhere-constrained {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .break-code {
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+    white-space: pre-wrap;
+  }
+
+  .break-code-block {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+}
